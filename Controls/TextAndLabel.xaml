@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="InstallerBuilder.Controls.TextAndLabel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InstallerBuilder.Controls"
+             mc:Ignorable="d" 
+             d:DesignWidth="200" Height="Auto" x:Name="Root" Margin="0,0,0,6">
+    <UserControl.Resources>
+        <local:BooleanToVisibilityConverter x:Key="bConv" />
+        <local:BooleanToInvisibilityConverter x:Key="iConv" />
+    </UserControl.Resources>
+    <DockPanel DataContext="{Binding ElementName=Root}">
+    
+        <Label x:Name="headerLabel" Padding="0,6,7,6" Content="{Binding Label}" VerticalContentAlignment="Center" MinWidth="150"
+               DockPanel.Dock="{Binding LabelDock}" TextBlock.TextAlignment="{Binding LabelAlign}" FontWeight="Bold"
+               Visibility="{Binding ShowCheckBox, Converter={StaticResource iConv}}" />
+
+        <CheckBox x:Name="headerCheck" Padding="7,6" Content="{Binding Label}" VerticalContentAlignment="Center" MinWidth="150"
+               DockPanel.Dock="{Binding LabelDock}" TextBlock.TextAlignment="{Binding LabelAlign}" FontWeight="Bold"
+               Visibility="{Binding ShowCheckBox, Converter={StaticResource bConv}}" />
+        
+        <Button Content="Browse" HorizontalAlignment="Right" DockPanel.Dock="Right" Width="80" Margin="5,0,0,0"
+               Visibility="{Binding ShowButton, Converter={StaticResource bConv}}" Click="Button_Click" />
+
+        <TextBox Padding="5" Text="{Binding Text}" DockPanel.Dock="Top" />
+
+    </DockPanel>
+</UserControl>

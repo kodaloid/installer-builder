@@ -1,0 +1,22 @@
+{
+  "ProductName": "Installer Builder",
+  "SoftwareType": "DotNetApplication",
+  "Description": "An application designed to speed-up creating installer packages for new software on Windows.",
+  "Publisher": "Kodaloid Software",
+  "Copyright": "© 2020 Kodaloid Software",
+  "Website": "http://kodaloid.com/projects/installer-builder/",
+  "Version": "1.0.0.0",
+  "OutputFilename": "InstallerBuilder_Setup_v{Version}.exe",
+  "Installer": "NSIS",
+  "SupportFramework": "None",
+  "RequestExecutionLevel": "Admin",
+  "ProductNameNoSpaces": "InstallerBuilder",
+  "CreateStartMenuFolder": false,
+  "StartMenuFolderName": null,
+  "IncludeLicensePage": false,
+  "License": null,
+  "SourcePath": "/bin/Debug/net5.0-windows",
+  "SourceIgnores": "*.pdb\n*.ibf",
+  "DesktopShortcutIncludes": "Installer Builder.exe",
+  "PrimaryExeFilename": "Installer Builder.exe"
+}

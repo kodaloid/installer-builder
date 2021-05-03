@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Microsoft.NET.Sdk.WindowsDesktop -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <RootNamespace>InstallerBuilder</RootNamespace>
+    <UseWPF>true</UseWPF>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\ibuilder.ico</ApplicationIcon>
+    <Version>1.0.0.0</Version>
+    <Description>An application designed to speed-up creating installer packages for new software on Windows.</Description>
+    <Copyright>© 2020 Kodaloid Software</Copyright>
+    <NeutralLanguage>en-GB</NeutralLanguage>
+    <PackageIcon>ibuilder.ico</PackageIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\ibuilder.ico" />
+    <None Remove="Assets\Icons\File_16x.png" />
+    <None Remove="Assets\Icons\Folder_16x.png" />
+    <None Remove="Assets\Icons\NewFolder_16x.png" />
+    <None Remove="Assets\Icons\NewItem_16x.png" />
+    <None Remove="Assets\Icons\Rename_16x.png" />
+    <None Remove="Assets\Icons\Trash_16x.png" />
+    <None Include="Assets\ibuilder.ico">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="MainWindow - Copy.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\ibuilder.ico" />
+    <Resource Include="Assets\Icons\File_16x.png" />
+    <Resource Include="Assets\Icons\Folder_16x.png" />
+    <Resource Include="Assets\Icons\NewFolder_16x.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Ookii.Dialogs.Wpf.NETCore" Version="2.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Icons\NewItem_16x.png" />
+    <Resource Include="Assets\Icons\Rename_16x.png" />
+    <Resource Include="Assets\Icons\Trash_16x.png" />
+  </ItemGroup>
+
+</Project>

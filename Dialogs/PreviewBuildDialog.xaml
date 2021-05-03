@@ -1,0 +1,33 @@
+﻿<Window x:Class="InstallerBuilder.Dialogs.PreviewBuildDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InstallerBuilder.Dialogs"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen" ShowInTaskbar="False"
+        Title="Preview Build" Height="300" Width="350">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TreeView Name="treePreview" Margin="0" BorderThickness="0" Padding="8,10">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type local:PreviewItem}" ItemsSource="{Binding Items}">
+                    <StackPanel Orientation="Horizontal" Margin="5,3">
+                        <Image Width="16" x:Name="icon" Source="pack://application:,,,/Assets/Icons/File_16x.png" Margin="0,0,3,0" />
+                        <TextBlock Text="{Binding Title}" />
+                    </StackPanel>
+                    <HierarchicalDataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding HasItems, RelativeSource={RelativeSource AncestorType={x:Type TreeViewItem}}}" Value="True">
+                            <Setter TargetName="icon" Property="Source" Value="pack://application:,,,/Assets/Icons/Folder_16x.png" />
+                        </DataTrigger>
+                    </HierarchicalDataTemplate.Triggers>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+
+    </Grid>
+</Window>
