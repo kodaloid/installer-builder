@@ -1,4 +1,5 @@
 ﻿using InstallerBuilder.Includes;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -20,21 +21,28 @@ namespace InstallerBuilder.Dialogs
         public PreviewBuildDialog(IbProject project, string projectFilePath)
         {
             InitializeComponent();
-
-            var structure = project.CompileFileStructure(projectFilePath);
-            var result = new PreviewItemRoot();
-
-            foreach (var item in structure.Where(t => t.IsFolder))
+            try
             {
-                result.InsertFile(item);
-            }
 
-            foreach (var item in structure.Where(t => !t.IsFolder))
+                var structure = project.CompileFileStructure(projectFilePath);
+                var result = new PreviewItemRoot();
+
+                foreach (var item in structure.Where(t => t.IsFolder))
+                {
+                    result.InsertFile(item);
+                }
+
+                foreach (var item in structure.Where(t => !t.IsFolder))
+                {
+                    result.InsertFile(item);
+                }
+
+                treePreview.ItemsSource = result.Items;
+            }
+            catch (Exception ex)
             {
-                result.InsertFile(item);
+                MessageBox.Show(ex.Message);
             }
-
-            treePreview.ItemsSource = result.Items;
         }
     }
 

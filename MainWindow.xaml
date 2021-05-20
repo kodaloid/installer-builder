@@ -99,7 +99,7 @@
                                 <ctl:TextAndLabel x:Name="textCopyright" Label="Copyright" Text="{Binding Copyright, Mode=TwoWay}" />
                                 <ctl:TextAndLabel x:Name="textWebsite" Label="Website" Text="{Binding Website, Mode=TwoWay}" />
                                 <ctl:TextAndLabel x:Name="textVersion" Label="Version" Text="{Binding Version, Mode=TwoWay}" />
-                                <ctl:TextAndLabel x:Name="textOutputFilename" Label="Output Filename" Text="{Binding OutputFilename, Mode=TwoWay}" />
+                                <ctl:TextAndLabel x:Name="textOutputFilename" Label="Output Filename" Text="{Binding OutputFilename, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                         </ScrollViewer>
                     </Border>
@@ -146,6 +146,13 @@
                                 <ctl:TextAndLabel x:Name="checkStartMenuFolder" Label="Start Menu Folder" ShowCheckBox="True" Checked="{Binding Path=CreateStartMenuShortcut, Mode=TwoWay}" Text="{Binding Path=StartMenuFolderName, Mode=TwoWay}" />
                                 <TextBlock Margin="152,0,0,10" Text="Provide a folder name." />
 
+                                <DockPanel Margin="0,10,0,0">
+                                    <Label Width="150" FontWeight="Bold" DockPanel.Dock="Left">Other Stuff</Label>
+                                    <StackPanel>
+                                        <CheckBox Name="checkIncludeUninstaller" Height="26" VerticalContentAlignment="Center" Content="Include Uninstaller" IsChecked="{Binding IncludeUninstaller}" />
+                                    </StackPanel>
+                                </DockPanel>
+
                             </StackPanel>
                         </ScrollViewer>
                     </Border>
@@ -154,8 +161,8 @@
             </TabItem>
 
 
-            <TabItem Header="License">
-                <Grid Background="#fff" Margin="5">
+            <TabItem Header="License" HorizontalAlignment="Left" Width="50">
+                <Grid Background="#fff" Margin="5" DataContext="{Binding Project}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition />
@@ -163,10 +170,11 @@
 
                     <StackPanel Orientation="Horizontal">
                         <Button x:Name="buttonLoadLicence" Content="Load File..." Click="buttonLoadLicence_Click" />
-                        <CheckBox x:Name="checkIncludeLicense" Content="Include License Page?" VerticalAlignment="Center" Margin="10,1,0,0" IsChecked="{Binding CurrentProject.IncludeLicensePage, Mode=TwoWay}" />
+                        <CheckBox x:Name="checkIncludeLicense" Content="Include License Page?" VerticalAlignment="Center" Margin="10,1,0,0" IsChecked="{Binding IncludeLicensePage, Mode=TwoWay}" />
                     </StackPanel>
 
-                    <TextBox x:Name="textLicense" Margin="0,5,0,0" Padding="5" Grid.Row="1" VerticalScrollBarVisibility="Visible" Text="{Binding CurrentProject.License, Mode=TwoWay}" />
+                    <TextBox x:Name="textLicense" Margin="0,5,0,0" Padding="5" Grid.Row="1" VerticalScrollBarVisibility="Visible"
+                             AcceptsReturn="True" Text="{Binding License, Mode=TwoWay}" />
 
                 </Grid>
             </TabItem>
@@ -181,7 +189,7 @@
                                 <ctl:TextAndLabel x:Name="tt" Label="Source Directory" ShowButton="True" Text="{Binding SourcePath, Mode=TwoWay}" ButtonClick="buttonBrowseSource_ButtonClick" />
                                 <TextBlock Margin="152,0,0,10" Text="Can be relative or absolute. Leave as / if you want to use the same path as this project." />
                                 <ctl:TextAreaAndLabel Label="File Ignore(s)" TextHeight="120" Text="{Binding SourceIgnores, Mode=TwoWay}" />
-                                <TextBlock Margin="152,0,0,10" Text="An ignore list that uses the same format as .gitignore" />
+                                <TextBlock Margin="152,0,0,10" Text="A list of wildcards to use as ignore rules." />
                                 <ctl:TextAreaAndLabel Label="Desktop Shortcut(s)" Text="{Binding DesktopShortcutIncludes, Mode=TwoWay}" />
                                 <TextBlock Margin="152,0,0,10" Text="A list of files to create shortcuts for (For example MyApp.exe)." />
                                 <ctl:TextAndLabel Label="Primary EXE Filename" Text="{Binding PrimaryExeFilename, Mode=TwoWay}" />

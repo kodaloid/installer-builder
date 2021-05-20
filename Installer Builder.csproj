@@ -28,6 +28,7 @@
     <None Remove="Assets\Icons\NewItem_16x.png" />
     <None Remove="Assets\Icons\Rename_16x.png" />
     <None Remove="Assets\Icons\Trash_16x.png" />
+    <None Remove="License.txt" />
     <None Include="Assets\ibuilder.ico">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
@@ -36,6 +37,12 @@
 
   <ItemGroup>
     <Page Remove="MainWindow - Copy.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="License.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

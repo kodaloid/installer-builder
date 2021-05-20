@@ -43,6 +43,7 @@ namespace InstallerBuilder
         {
             this.theView.Project = proejct;
             this.DataContext = theView;
+            
         }
 
 
@@ -95,6 +96,13 @@ namespace InstallerBuilder
                         Filter = "Executable File(s)|*.exe",
                         FileName = theView.Project.GenerateExeFilename()
                     };
+
+                    if (string.IsNullOrWhiteSpace(tt.Text))
+                    {
+                        MessageBox.Show("Please choose a source folder first.");
+                        return;
+                    }
+
                     if (dlgSaveEXE.ShowDialog(this) == true)
                     {
                         BuildDialog buildDialog = new BuildDialog(dlgSaveEXE.FileName, theView.LastFilename, theView.Project);

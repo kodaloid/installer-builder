@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace InstallerBuilder.Includes.Factories
 {
@@ -52,7 +53,7 @@ namespace InstallerBuilder.Includes.Factories
             }
             catch (Exception ex)
             {
-                Debugger.Break();
+                MessageBox.Show(ex.Message);
             }
         }
 

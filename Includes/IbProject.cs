@@ -22,7 +22,7 @@ namespace InstallerBuilder.Includes
         InstallerType _Installer;
         SupportType _SupportFramework;
         RequestExecutionLevelType _RequestExecutionLevel;
-        bool _CreateStartMenuShortcut, _IncludeLicensePage;
+        bool _CreateStartMenuShortcut, _IncludeLicensePage, _IncludeUninstaller;
 
         #endregion
 
@@ -212,6 +212,13 @@ namespace InstallerBuilder.Includes
         }
 
 
+        public bool IncludeUninstaller
+        {
+            get => _IncludeUninstaller;
+            set { _IncludeUninstaller = value; change(nameof(IncludeUninstaller)); }
+        }
+
+
         #endregion
 
 
@@ -244,6 +251,7 @@ namespace InstallerBuilder.Includes
             this.SourcePath = "/";
             this.SourceIgnores = "*.pdb\n*.ibf";
             this.OutputFilename = "{ProductName}_Installer_v{Version}.exe";
+            this.IncludeUninstaller = true;
         }
 
 
