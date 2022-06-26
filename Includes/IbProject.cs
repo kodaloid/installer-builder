@@ -17,7 +17,7 @@ namespace InstallerBuilder.Includes
 
         string _ProductName, _Description, _Publisher, _Copyright, _Website, _Version,
                _OutputFilename, _StartMenuFolderName, _License, _SourcePath, _SourceIgnores,
-               _DesktopShortcutIncludes, _PrimaryExeFilename;
+               _DesktopShortcutIncludes, _PrimaryExeFilename, _ExtraNsisCode, _ExtraUninstNsisCode;
         SoftwareType _SoftwareType;
         InstallerType _Installer;
         SupportType _SupportFramework;
@@ -216,6 +216,23 @@ namespace InstallerBuilder.Includes
         {
             get => _IncludeUninstaller;
             set { _IncludeUninstaller = value; change(nameof(IncludeUninstaller)); }
+        }
+        
+
+        /// <summary>
+        /// Any extra code to inject when building the NSIS script.
+        /// </summary>
+        public string ExtraNsisCode
+        {
+            get => _ExtraNsisCode;
+            set { _ExtraNsisCode = value; change(nameof(ExtraNsisCode)); }
+        }
+
+
+        public string ExtraUninstNsisCode
+        {
+            get => _ExtraUninstNsisCode;
+            set { _ExtraUninstNsisCode = value; change(nameof(ExtraUninstNsisCode)); }
         }
 
 

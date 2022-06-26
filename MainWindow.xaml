@@ -153,6 +153,10 @@
                                     </StackPanel>
                                 </DockPanel>
 
+                                <ctl:TextAreaAndLabel x:Name="extraNsisCode" Label="Extra NSIS Code" Text="{Binding ExtraNsisCode, Mode=TwoWay}" Margin="0,15,0,0"/>
+
+                                <ctl:TextAreaAndLabel x:Name="extraUninstNsisCode" Label="Extra Uninstall NSIS Code" Text="{Binding ExtraUninstNsisCode, Mode=TwoWay}" Margin="0,15,0,0"/>
+
                             </StackPanel>
                         </ScrollViewer>
                     </Border>
@@ -180,7 +184,7 @@
             </TabItem>
 
 
-            <TabItem Header="File System">
+            <TabItem Header="File System" Height="22" Margin="-2,-2,-2,0" VerticalAlignment="Top">
                 <Grid Margin="5">
 
                     <Border Margin="0" BorderBrush="#ccc" BorderThickness="1">

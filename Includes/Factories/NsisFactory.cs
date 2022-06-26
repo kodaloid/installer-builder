@@ -13,6 +13,8 @@ namespace InstallerBuilder.Includes.Factories
     {
         StringBuilder sb;
         Process compiler;
+        string nsi_file;
+        public bool error_thrown = false;
 
 
         public NsisFactory(DirectoryInfo sourceDirectory, IbProject project) : base("NSIS Installer", sourceDirectory, project)
@@ -27,11 +29,11 @@ namespace InstallerBuilder.Includes.Factories
             {
                 // Create the nsi script that NSIS will read for instructions.
                 string nsi = BuildNsiScripts(outputFilename, buildFolder, fileSystem);
-                string file = $"{buildFolder.TrimEnd('\\')}\\_temp.nsi";
+                nsi_file = $"{buildFolder.TrimEnd('\\')}\\_temp.nsi";
 
                 // save the script.
-                if (File.Exists(file)) File.Delete(file);
-                File.WriteAllText(file, nsi);
+                if (File.Exists(nsi_file)) File.Delete(nsi_file);
+                File.WriteAllText(nsi_file, nsi);
 
 
                 // run nsis.
@@ -39,7 +41,7 @@ namespace InstallerBuilder.Includes.Factories
                 //compiler.StartInfo.FileName = "\"C:\\Program Files (x86)\\NSIS\\makensis.exe\"";
                 compiler.StartInfo.FileName = FileHelper.ProgramFilesx86() + "\\NSIS\\makensis.exe";
                 compiler.StartInfo.CreateNoWindow = false;
-                compiler.StartInfo.Arguments = $"\"{file}\"";
+                compiler.StartInfo.Arguments = $"\"{nsi_file}\"";
                 compiler.StartInfo.UseShellExecute = false;
                 compiler.StartInfo.RedirectStandardOutput = true;
                 compiler.StartInfo.RedirectStandardError = true;
@@ -66,16 +68,29 @@ namespace InstallerBuilder.Includes.Factories
                 compiler.ErrorDataReceived -= Compiler_ErrorDataReceived;
                 compiler.Exited -= Compiler_Exited;
                 compiler.Dispose();
+
+                if (File.Exists(nsi_file) && !error_thrown)
+                {
+                    File.Delete(nsi_file);
+                }
             }
             catch { }
             DoComplete();
         }
 
 
-        private void Compiler_ErrorDataReceived(object sender, DataReceivedEventArgs e) => DoLogEvent(e.Data);
+        private void Compiler_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            error_thrown = true;
+            DoLogEvent(e.Data);
+        }
 
 
-        private void Compiler_OutputDataReceived(object sender, DataReceivedEventArgs e) => DoLogEvent(e.Data);
+        private void Compiler_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            if (e.Data != null && e.Data.Contains("Error")) error_thrown = true;
+            DoLogEvent(e.Data);
+        }
 
 
         public override void Validate()
@@ -147,6 +162,9 @@ namespace InstallerBuilder.Includes.Factories
 
             // The main section.
             sb.AppendLine($"Section \"Application Files\" SecDummy");
+
+            
+
             sb.AppendLine($"  WriteRegStr HKCU \"Software\\{Project.Publisher}\\{Project.ProductNameNoSpaces}\" \"\" $INSTDIR");
             sb.AppendLine($"  WriteRegStr HKLM \"Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{Project.ProductNameNoSpaces}\" \\ ");
             sb.AppendLine($"                   \"DisplayName\" \"{Project.ProductName}\" ");
@@ -198,9 +216,19 @@ namespace InstallerBuilder.Includes.Factories
             sb.AppendLine("SectionEnd");
 
 
+            // Add any extra nsis code.
+            if (!string.IsNullOrWhiteSpace(Project.ExtraNsisCode))
+            {
+                sb.AppendLine(Project.ExtraNsisCode);
+            }
+
+
             // Language Setup + Run after install option
             AppendHeader("Languages");
-            sb.AppendLine($"!define MUI_FINISHPAGE_RUN \"$INSTDIR\\{Project.PrimaryExeFilename}\"");
+            if (!string.IsNullOrWhiteSpace(Project.PrimaryExeFilename))
+            {
+                sb.AppendLine($"!define MUI_FINISHPAGE_RUN \"$INSTDIR\\{Project.PrimaryExeFilename}\"");
+            }
             sb.AppendLine("!insertmacro MUI_PAGE_FINISH");
             sb.AppendLine("!insertmacro MUI_LANGUAGE \"English\"");
 
@@ -252,6 +280,12 @@ namespace InstallerBuilder.Includes.Factories
             sb.AppendLine("  RMDir \"$INSTDIR\"");
             sb.AppendLine($"  DeleteRegKey /ifempty HKCU \"Software\\{Project.Publisher}\\{Project.ProductName}\"");
             sb.AppendLine($"  DeleteRegKey HKLM \"Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{Project.ProductNameNoSpaces}\"");
+
+            if (!string.IsNullOrWhiteSpace(Project.ExtraUninstNsisCode))
+            {
+                sb.AppendLine(Project.ExtraUninstNsisCode);
+            }
+
             sb.AppendLine("SectionEnd");
 
 

@@ -19,7 +19,7 @@
         <Image Source="pack://application:,,,/Assets/ibuilder.ico" Width="64" />
         <TextBlock HorizontalAlignment="Center" Margin="10,10,10,0" FontSize="12" FontStyle="Italic">An app for building install sequences for Windows.</TextBlock>
         <TextBlock HorizontalAlignment="Center" Margin="10,10,10,0" FontSize="11">Written by Kodalod (<Hyperlink Click="Hyperlink_Click">http://kodaloid.com</Hyperlink>)</TextBlock>
-        <TextBlock HorizontalAlignment="Center" Margin="10,0,10,10" FontSize="11">Version 1.0 - Copyright 2020</TextBlock>
+        <TextBlock HorizontalAlignment="Center" Margin="10,0,10,10" FontSize="11">Version 1.0 - Copyright 2022</TextBlock>
         <Button HorizontalAlignment="Center" Margin="10,10,10,20" IsCancel="True">Close</Button>
     </StackPanel>
 </Window>

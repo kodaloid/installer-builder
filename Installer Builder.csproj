@@ -7,9 +7,9 @@
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets\ibuilder.ico</ApplicationIcon>
-    <Version>1.0.0.0</Version>
+    <Version>1.0.1.0</Version>
     <Description>An application designed to speed-up creating installer packages for new software on Windows.</Description>
-    <Copyright>© 2020 Kodaloid Software</Copyright>
+    <Copyright>© 2022 Kodaloid Software</Copyright>
     <NeutralLanguage>en-GB</NeutralLanguage>
     <PackageIcon>ibuilder.ico</PackageIcon>
   </PropertyGroup>
@@ -53,7 +53,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NSIS-Package" Version="3.0.6.1" />
     <PackageReference Include="Ookii.Dialogs.Wpf.NETCore" Version="2.2.1" />
   </ItemGroup>
 
