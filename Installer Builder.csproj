@@ -2,12 +2,12 @@
   <!-- Microsoft.NET.Sdk.WindowsDesktop -->
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <RootNamespace>InstallerBuilder</RootNamespace>
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets\ibuilder.ico</ApplicationIcon>
-    <Version>1.0.2.0</Version>
+    <Version>1.1.0</Version>
     <Description>An application designed to speed-up creating installer packages for new software on Windows.</Description>
     <Copyright>© 2022 Kodaloid Software</Copyright>
     <NeutralLanguage>en-GB</NeutralLanguage>
