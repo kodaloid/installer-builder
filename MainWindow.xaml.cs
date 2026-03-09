@@ -4,6 +4,7 @@ using InstallerBuilder.Includes.Helpers;
 using InstallerBuilder.Views;
 using Microsoft.Win32;
 using Ookii.Dialogs.Wpf;
+using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
@@ -35,7 +36,7 @@ namespace InstallerBuilder
                 this.theView = new IbProjectView();
                 SetProject(new IbProject());
             }
-            
+
         }
 
 
@@ -128,7 +129,17 @@ namespace InstallerBuilder
             dlg.Filter = "All File(s)|*.*";
             if (dlg.ShowDialog(this) == true && !string.IsNullOrWhiteSpace(dlg.FileName))
             {
-                textLicense.Text = File.ReadAllText(dlg.FileName);
+                //theView.Project.License = dlg.FileName;
+                //textLicense.Text = File.ReadAllText(dlg.FileName);
+                if (string.IsNullOrWhiteSpace(theView.LastFilename))
+                {
+                    theView.Project.License = dlg.FileName;
+                }
+                else
+                {
+                    FileInfo info = new FileInfo(theView.LastFilename);
+                    theView.Project.License = dlg.FileName.Replace(info.DirectoryName, "");
+                }
             }
         }
 
@@ -145,7 +156,7 @@ namespace InstallerBuilder
                 else
                 {
                     FileInfo info = new FileInfo(theView.LastFilename);
-                    theView.Project.SourcePath = dlg.SelectedPath.Replace(info.DirectoryName, "");
+                    theView.Project.SourcePath = dlg.SelectedPath.Replace(info.DirectoryName, "").TrimStart('\\');
                 }
             }
         }

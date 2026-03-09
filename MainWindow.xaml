@@ -9,8 +9,8 @@
         x:Class="InstallerBuilder.MainWindow"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen" Loaded="Window_Loaded"
-        MinHeight="580" MinWidth="700"
-        Title="Installer Builder" Height="550" Width="700" Icon="/Assets/ibuilder.ico">
+        MinHeight="600" MinWidth="700"
+        Title="Installer Builder" Height="600" Width="700" Icon="/Assets/ibuilder.ico">
 
     <Window.Resources>
         <inc:EnumToNameConverter x:Key="enumToNameConverter" />
@@ -97,6 +97,7 @@
                                 <ctl:TextAreaAndLabel x:Name="textDescription" Label="Description" Text="{Binding Description, Mode=TwoWay}" />
                                 <ctl:TextAndLabel x:Name="textPublisher" Label="Publisher Name" Text="{Binding Publisher, Mode=TwoWay}" />
                                 <ctl:TextAndLabel x:Name="textCopyright" Label="Copyright" Text="{Binding Copyright, Mode=TwoWay}" />
+                                <ctl:TextAndLabel x:Name="lf" Label="License File" ShowButton="True" Text="{Binding License, Mode=TwoWay}" ButtonClick="buttonLoadLicence_Click" />
                                 <ctl:TextAndLabel x:Name="textWebsite" Label="Website" Text="{Binding Website, Mode=TwoWay}" />
                                 <ctl:TextAndLabel x:Name="textVersion" Label="Version" Text="{Binding Version, Mode=TwoWay}" />
                                 <ctl:TextAndLabel x:Name="textOutputFilename" Label="Output Filename" Text="{Binding OutputFilename, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -165,26 +166,7 @@
             </TabItem>
 
 
-            <TabItem Header="License" HorizontalAlignment="Left" Width="50">
-                <Grid Background="#fff" Margin="5" DataContext="{Binding Project}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-
-                    <StackPanel Orientation="Horizontal">
-                        <Button x:Name="buttonLoadLicence" Content="Load File..." Click="buttonLoadLicence_Click" />
-                        <CheckBox x:Name="checkIncludeLicense" Content="Include License Page?" VerticalAlignment="Center" Margin="10,1,0,0" IsChecked="{Binding IncludeLicensePage, Mode=TwoWay}" />
-                    </StackPanel>
-
-                    <TextBox x:Name="textLicense" Margin="0,5,0,0" Padding="5" Grid.Row="1" VerticalScrollBarVisibility="Visible"
-                             AcceptsReturn="True" Text="{Binding License, Mode=TwoWay}" />
-
-                </Grid>
-            </TabItem>
-
-
-            <TabItem Header="File System" Height="22" Margin="-2,-2,-2,0" VerticalAlignment="Top">
+            <TabItem Header="File System">
                 <Grid Margin="5">
 
                     <Border Margin="0" BorderBrush="#ccc" BorderThickness="1">
@@ -195,7 +177,7 @@
                                 <ctl:TextAreaAndLabel Label="File Ignore(s)" TextHeight="120" Text="{Binding SourceIgnores, Mode=TwoWay}" />
                                 <TextBlock Margin="152,0,0,10" Text="A list of wildcards to use as ignore rules." />
                                 <ctl:TextAreaAndLabel Label="Desktop Shortcut(s)" Text="{Binding DesktopShortcutIncludes, Mode=TwoWay}" />
-                                <TextBlock Margin="152,0,0,10" Text="A list of files to create shortcuts for (For example MyApp.exe)." />
+                                <TextBlock Margin="152,0,0,10" Text="A list of files|aliases to create shortcuts for (For example MyApp.exe|My Alias)." />
                                 <ctl:TextAndLabel Label="Primary EXE Filename" Text="{Binding PrimaryExeFilename, Mode=TwoWay}" />
                                 <TextBlock Margin="152,0,0,10" Text="This is used for the icon, and to allow user to launch app after install." />
 

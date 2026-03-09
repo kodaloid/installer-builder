@@ -23,12 +23,12 @@ namespace InstallerBuilder.Includes.Factories
         }
 
 
-        public override void Begin(string outputFilename, string buildFolder, IbFileSystem fileSystem)
+        public override void Begin(string outputFilename, string ibfFolder, string buildFolder, IbFileSystem fileSystem)
         {
             try
             {
                 // Create the nsi script that NSIS will read for instructions.
-                string nsi = BuildNsiScripts(outputFilename, buildFolder, fileSystem);
+                string nsi = BuildNsiScripts(outputFilename, ibfFolder, buildFolder, fileSystem);
                 nsi_file = $"{buildFolder.TrimEnd('\\')}\\_temp.nsi";
 
                 // save the script.
@@ -115,7 +115,7 @@ namespace InstallerBuilder.Includes.Factories
         }
 
 
-        private string BuildNsiScripts(string outputFilename, string buildFolder, IbFileSystem fileSystem)
+        private string BuildNsiScripts(string outputFilename, string ifbFolder, string buildFolder, IbFileSystem fileSystem)
         {
             // Initializers
             sb.AppendLine("!include \"MUI2.nsh\"");
@@ -142,7 +142,7 @@ namespace InstallerBuilder.Includes.Factories
 
             // Pages
             AppendHeader("Pages");
-            if (Project.IncludeLicensePage) sb.AppendLine("!insertmacro MUI_PAGE_LICENSE \"License.txt\"");
+            if (Project.IncludeLicensePage) sb.AppendLine("!insertmacro MUI_PAGE_LICENSE \""+ ifbFolder + "\\LICENSE.txt\"");
             sb.AppendLine("!insertmacro MUI_PAGE_COMPONENTS");
             sb.AppendLine("!insertmacro MUI_PAGE_DIRECTORY");
             sb.AppendLine("!insertmacro MUI_PAGE_INSTFILES");
@@ -200,15 +200,19 @@ namespace InstallerBuilder.Includes.Factories
 
             if (!string.IsNullOrWhiteSpace(Project.DesktopShortcutIncludes))
             {
-                string[] desktopShortcutNames = Project.DesktopShortcutIncludes.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).ToArray();
-                foreach (string desktopShortcutName in desktopShortcutNames)
+                string[] desktopShortcutPairs = Project.DesktopShortcutIncludes.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToArray();
+                foreach (string desktopShortcutPair in desktopShortcutPairs)
                 {
-                    string linkFile = (desktopShortcutName.Contains("/") || desktopShortcutName.Contains("/")
-                                    ? LastPathPart(desktopShortcutName)
-                                    : desktopShortcutName).Replace(".exe", "", StringComparison.InvariantCultureIgnoreCase);
+                    string[] desktopShortcutParts = desktopShortcutPair.Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                    string shortcutName = desktopShortcutParts[0];
+                    string shortcutAlias = desktopShortcutParts.Length > 1 ? desktopShortcutParts[1] : shortcutName;
 
-                    linkFiles.Add(linkFile);
-                    sb.AppendLine($"  CreateShortcut \"$DESKTOP\\{linkFile}.lnk\" \"$INSTDIR\\{desktopShortcutName}\"");
+                    /* string linkFile = (desktopShortcutName.Contains("/") || desktopShortcutName.Contains("/")
+                                    ? LastPathPart(desktopShortcutName)
+                                    : desktopShortcutName).Replace(".exe", "", StringComparison.InvariantCultureIgnoreCase); */
+
+                    linkFiles.Add(shortcutAlias);
+                    sb.AppendLine($"  CreateShortcut \"$DESKTOP\\{shortcutAlias}.lnk\" \"$INSTDIR\\{shortcutName}\"");
                 }
             }
 

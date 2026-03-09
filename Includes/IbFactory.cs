@@ -26,7 +26,7 @@ namespace InstallerBuilder.Includes
         public abstract void Validate();
 
 
-        public abstract void Begin(string outputFilename, string buildFolder, IbFileSystem fileSystem);
+        public abstract void Begin(string outputFilename, string ibfFolder, string buildFolder, IbFileSystem fileSystem);
     
 
         protected void DoLogEvent(string message) => LogEvent?.Invoke(message);

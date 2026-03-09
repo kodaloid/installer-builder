@@ -76,6 +76,8 @@ namespace InstallerBuilder.Dialogs
             IbFileSystem entries = _project.CompileFileStructure(_projectFilename);
             _buildPath = _project.GetRoot(_projectFilename);
 
+            FileInfo info = new(_projectFilename);
+
             /* 
             await Task.Delay(500);
             _buildPath = FileHelper.GetTemporaryDirectory().TrimEnd('\\');
@@ -105,7 +107,7 @@ namespace InstallerBuilder.Dialogs
 
             _factory.LogEvent += _factory_LogEvent;
             _factory.Complete += _factory_Complete;
-            _factory.Begin(_outputFilename, _buildPath, entries);
+            _factory.Begin(_outputFilename, info.DirectoryName, _buildPath, entries);
         }
 
 
