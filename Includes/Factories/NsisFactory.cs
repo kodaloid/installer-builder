@@ -212,6 +212,7 @@ namespace InstallerBuilder.Includes.Factories
                                     : desktopShortcutName).Replace(".exe", "", StringComparison.InvariantCultureIgnoreCase); */
 
                     linkFiles.Add(shortcutAlias);
+                    sb.AppendLine($"  SetOutPath \"$INSTDIR\\\"");
                     sb.AppendLine($"  CreateShortcut \"$DESKTOP\\{shortcutAlias}.lnk\" \"$INSTDIR\\{shortcutName}\"");
                 }
             }

@@ -266,7 +266,7 @@ namespace InstallerBuilder.Includes
             this.SupportFramework = SupportType.None;
             this.RequestExecutionLevel = RequestExecutionLevelType.Admin;
             this.SourcePath = "/";
-            this.SourceIgnores = "*.pdb\n*.ibf";
+            this.SourceIgnores = "*.pdb\n*.ibf\n*.nsi";
             this.OutputFilename = "{ProductName}_Installer_v{Version}.exe";
             this.IncludeUninstaller = true;
         }

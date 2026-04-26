@@ -119,7 +119,7 @@ namespace InstallerBuilder.Dialogs
                 //Directory.Delete(_buildPath, true);
             }
             catch { }
-            MessageBox.Show("Build Complete!");
+            MessageBox.Show(this, "Build Complete!");
         }
 
 
